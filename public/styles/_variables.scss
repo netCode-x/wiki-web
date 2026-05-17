@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+// 全局主题变量
+:root {
+  // 浅色主题（默认）
+
+  --logo-gradient-start: #3b82f6;
+  --logo-gradient-mid: #8b5cf6;
+  --logo-gradient-end: #ec489a;
+  --body-bg: rgb(244, 242, 236);
+  --topbar-bg: rgba(255, 255, 255, 0.85);
+  --border-color: #e2e8f0;
+  --nav-text: #1e293b;
+  --nav-hover-bg: #f1f5f9;
+  --nav-hover-text: #0f172a;
+  --btn-bg: #ffffff;
+  --btn-text: #334155;
+  --btn-hover-bg: #f8fafc;
+  --btn-hover-border: #cbd5e1;
+  --input-bg: #ffffff;
+  --input-border: #e2e8f0;
+  --input-placeholder: #94a3b8;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  // 新增主页专用
+  --hero-bg: radial-gradient(circle at 10% 30%, rgba(59, 130, 246, 0.05), transparent);
+  --text-secondary: #4b5563;
+
+  // 新增统计卡片变量
+  --card-bg: rgba(236, 238, 237);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --stat-number-start: #3b82f6;
+  --stat-number-end: #8b5cf6;
+
+  // 浅色主题背景
+  --banner-bg: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08), transparent 80%),
+  var(--body-bg);
+  --banner-glow: rgba(59, 130, 246, 0.1);
+
+  // 新增文章卡片（纸张效果）
+  --paper-bg: #fffef7;
+  --paper-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+
+
+}
+
+[data-theme="dark"] {
+  // 深色主题（默认）
+  --logo-gradient-start: #60a5fa;
+  --logo-gradient-mid: #c084fc;
+  --logo-gradient-end: #f472b6;
+  --body-bg: #1a1a1a;
+  --topbar-bg: rgba(23, 23, 23, 0.92);
+  --border-color: #2d2d2d;
+  --nav-text: #e2e8f0;
+  --nav-hover-bg: #2d2d2d;
+  --nav-hover-text: #f1f5f9;
+  --btn-bg: #2d2d2d;
+  --btn-text: #cbd5e6;
+  --btn-hover-bg: #3d3d3d;
+  --btn-hover-border: #4d4d4d;
+  --input-bg: #2d2d2d;
+  --input-border: #4d4d4d;
+  --input-placeholder: #9ca3af;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+
+  --hero-bg: radial-gradient(circle at 10% 30%, rgba(96, 165, 250, 0.1), transparent);
+  --text-secondary: #9ca3af;
+
+
+  // 新增统计卡片变量
+  --card-bg: rgba(31, 37, 43);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.3);
+  --stat-number-start: #60a5fa;
+  --stat-number-end: #c084fc;
+
+  // 深色主题背景
+  --banner-bg: radial-gradient(circle at 10% 20%, rgba(96, 165, 250, 0.12), transparent 80%),
+  var(--body-bg);
+  --banner-glow: rgba(96, 165, 250, 0.15);
+
+
+  // 新增文章卡片（纸张效果）
+  --paper-bg: #2a2a2a;
+  --paper-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --footer-bg: rgba(15, 23, 42, 0.9);
+  --card-hover-bg: rgba(30, 41, 59, 0.95);
+}
+
+// 全局容器样式（响应式）
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--nav-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}

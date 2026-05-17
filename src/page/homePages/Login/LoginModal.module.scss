@@ -1,0 +1,517 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modalContent {
+  background: var(--card-bg);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  backdrop-filter: blur(12px);
+
+  h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    text-align: center;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--btn-hover-bg);
+    color: var(--text-primary);
+    transform: scale(1.05);
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.2rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+
+  input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--logo-gradient-start);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--logo-gradient-start);
+  border: none;
+  border-radius: 2rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--logo-gradient-mid);
+    transform: translateY(-1px);
+  }
+}
+
+.switchMode {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+
+  .switchBtn {
+    background: none;
+    border: none;
+    color: var(--logo-gradient-start);
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modalContent {
+  background: var(--card-bg);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  backdrop-filter: blur(12px);
+  position: relative;
+
+  h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    text-align: center;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--btn-hover-bg);
+    color: var(--text-primary);
+    transform: scale(1.05);
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.2rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+
+  input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--logo-gradient-start);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+  }
+}
+
+// 验证码区域
+.captchaWrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  .captchaInput {
+    flex: 1;
+  }
+
+  .captchaDisplay {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--logo-gradient-start);
+      background: var(--btn-hover-bg);
+    }
+
+    .captchaText {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: var(--text-primary);
+      user-select: none;
+    }
+
+    .refreshBtn {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.3rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--logo-gradient-start);
+      }
+    }
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--logo-gradient-start);
+  border: none;
+  border-radius: 2rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background: var(--logo-gradient-mid);
+    transform: translateY(-1px);
+  }
+}
+
+.switchMode {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+
+  .switchBtn {
+    background: none;
+    border: none;
+    color: var(--logo-gradient-start);
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+// 用户菜单样式
+.userMenuWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.userAvatar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 2rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--btn-hover-bg);
+  }
+
+  .avatar {
+    border: 2px solid var(--logo-gradient-start);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .username {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// 确保模态框在所有内容之上
+.modalOverlay {
+  z-index: 2000;
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .userAvatar .username {
+    display: none;
+  }
+
+  .captchaWrapper {
+    flex-direction: column;
+
+    .captchaDisplay {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
+// 加载状态样式
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+// 添加一些动画效果
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.userAvatar .avatar:active {
+  animation: pulse 0.3s ease;
+}
+
+// 在现有样式基础上添加以下样式
+
+// 邮箱验证码区域
+.emailWrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  .emailInput {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sendCodeBtn {
+    height: 40px;
+    padding: 0 1rem;
+    background: linear-gradient(135deg, var(--logo-gradient-start) 0%, var(--logo-gradient-mid) 100%);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    min-width: 90px;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// 底部链接区域（用于登录模式）
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+
+  .linkBtn {
+    background: none;
+    border: none;
+    color: var(--logo-gradient-start);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--logo-gradient-mid);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .separator {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .emailWrapper {
+    flex-direction: column;
+
+    .emailInput {
+      width: 100%;
+    }
+
+    .sendCodeBtn {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+}

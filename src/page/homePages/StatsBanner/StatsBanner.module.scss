@@ -1,0 +1,606 @@
+// StatsBanner.module.scss
+
+// CSS 变量定义
+:root {
+  --banner-padding: 4rem 0;
+  --stats-padding: 2rem;
+  --brand-font-size: 1.8rem;
+  --carousel-height: 400px;
+  --carousel-height-mobile: 320px;
+  --carousel-height-small: 280px;
+  --arrow-size: 40px;
+  --slide-content-padding: 2rem;
+}
+
+// 大屏幕优化
+@media (min-width: 1920px) {
+  :root {
+    --banner-padding: 5rem 0;
+    --stats-padding: 2.5rem;
+    --brand-font-size: 2rem;
+    --carousel-height: 450px;
+    --arrow-size: 48px;
+    --slide-content-padding: 2.5rem;
+  }
+}
+
+// 桌面优化
+@media (min-width: 1440px) and (max-width: 1919px) {
+  :root {
+    --banner-padding: 4.5rem 0;
+    --stats-padding: 2.25rem;
+    --carousel-height: 420px;
+  }
+}
+
+// 平板优化
+@media (max-width: 1024px) {
+  :root {
+    --banner-padding: 3rem 0;
+    --stats-padding: 1.75rem;
+    --brand-font-size: 1.6rem;
+    --carousel-height: 360px;
+  }
+}
+
+// 手机优化
+@media (max-width: 768px) {
+  :root {
+    --banner-padding: 2rem 0;
+    --stats-padding: 1.5rem;
+    --brand-font-size: 1.4rem;
+    --carousel-height: var(--carousel-height-mobile);
+    --arrow-size: 32px;
+    --slide-content-padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --banner-padding: 1.5rem 0;
+    --stats-padding: 1.25rem;
+    --brand-font-size: 1.2rem;
+    --carousel-height: var(--carousel-height-small);
+    --arrow-size: 28px;
+    --slide-content-padding: 1rem;
+  }
+}
+
+.statsBanner {
+  padding: var(--banner-padding);
+  background: var(--body-bg);
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  // 装饰性背景
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, var(--banner-glow), transparent 70%);
+    pointer-events: none;
+    opacity: 0.4;
+    animation: breathe 8s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--border-color),
+            transparent
+    );
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 4vw, 2rem);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+}
+
+/* 左侧统计卡片 */
+.statsInfo {
+  .statCard {
+    background: var(--card-bg);
+    border-radius: clamp(1.5rem, 4vw, 2rem);
+    padding: var(--stats-padding);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .statNumber {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    margin-bottom: clamp(1rem, 4vw, 1.5rem);
+    flex-wrap: wrap;
+
+    .number {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--stat-number-start), var(--stat-number-end));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      animation: countUp 0.6s ease-out;
+    }
+
+    .label {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+  }
+
+  .brand {
+    margin-bottom: clamp(1rem, 4vw, 1.5rem);
+
+    .brandName {
+      font-size: var(--brand-font-size);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      border-left: 3px solid var(--logo-gradient-start);
+      padding-left: clamp(0.75rem, 3vw, 1rem);
+      display: inline-block;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  .description {
+    margin-bottom: clamp(1.5rem, 5vw, 2rem);
+    flex: 1;
+
+    .slogan {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .subSlogan {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      color: var(--text-secondary);
+      margin-bottom: clamp(0.75rem, 3vw, 1rem);
+      font-weight: 500;
+    }
+
+    .detail {
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin: 0;
+      text-align: justify;
+
+      @media (max-width: 768px) {
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .todayStats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(0.75rem, 3vw, 1rem);
+    padding-top: clamp(1rem, 4vw, 1.5rem);
+    border-top: 1px solid var(--border-color);
+
+    .todayVisit {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+
+      .todayNumber {
+        font-size: clamp(1.5rem, 5vw, 1.8rem);
+        font-weight: 700;
+        color: var(--logo-gradient-start);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .todayLabel {
+        font-size: clamp(0.8rem, 3vw, 0.9rem);
+        color: var(--text-secondary);
+      }
+    }
+
+    .action {
+      .websiteBtn {
+        padding: clamp(0.5rem, 2vw, 0.6rem) clamp(1rem, 4vw, 1.5rem);
+        font-size: clamp(0.85rem, 3vw, 0.9rem);
+        font-weight: 500;
+        color: var(--btn-text);
+        background: var(--btn-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: inherit;
+        backdrop-filter: blur(4px);
+        white-space: nowrap;
+
+        // 移动端增大触摸区域
+        @media (pointer: coarse) {
+          min-height: 40px;
+          min-width: 100px;
+        }
+
+        &:hover {
+          background: var(--btn-hover-bg);
+          border-color: var(--btn-hover-border);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+          transform: translateY(0) scale(0.96);
+        }
+      }
+    }
+  }
+}
+
+/* 右侧轮播图 */
+.carouselWrapper {
+  position: relative;
+  height: var(--carousel-height);
+  border-radius: clamp(1rem, 4vw, 1.5rem);
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+
+  // 触摸设备优化
+  @media (pointer: coarse) {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .carouselContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .carouselTrack {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    will-change: transform;
+  }
+
+  .carouselSlide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    // 渐变遮罩
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg,
+              rgba(0, 0, 0, 0.2),
+              rgba(0, 0, 0, 0.1)
+      );
+    }
+
+    .slideContent {
+      text-align: center;
+      color: white;
+      padding: var(--slide-content-padding);
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: clamp(0.75rem, 3vw, 1rem);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+      max-width: 90%;
+      animation: fadeInUp 0.6s ease-out;
+
+      h3 {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
+        opacity: 0.95;
+        margin: 0;
+      }
+    }
+  }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+
+    // 触摸设备优化
+    @media (pointer: coarse) {
+      width: clamp(36px, 10vw, 40px);
+      height: clamp(36px, 10vw, 40px);
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+  }
+
+  .arrowLeft {
+    left: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .arrowRight {
+    right: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .dots {
+    position: absolute;
+    bottom: clamp(0.75rem, 3vw, 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    z-index: 10;
+
+    .dot {
+      width: clamp(6px, 2vw, 8px);
+      height: clamp(6px, 2vw, 8px);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      // 触摸设备优化
+      @media (pointer: coarse) {
+        min-width: 8px;
+        min-height: 8px;
+      }
+
+      &.active {
+        background: white;
+        width: clamp(20px, 6vw, 24px);
+        border-radius: 4px;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.2);
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+}
+
+// 动画效果
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// 响应式调整 - 平板横屏
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .carouselWrapper {
+    height: 300px;
+  }
+
+  .statsInfo .statCard {
+    padding: 1.5rem;
+  }
+}
+
+// 响应式调整 - 手机横屏
+@media (max-width: 768px) and (orientation: landscape) {
+  .statsBanner {
+    padding: 1rem 0;
+  }
+
+  .statsInfo .brand .brandName {
+    font-size: 1.2rem;
+  }
+
+  .statsInfo .description .slogan {
+    font-size: 1rem;
+  }
+
+  .statsInfo .description .detail {
+    font-size: 0.8rem;
+  }
+}
+
+// 触摸设备优化
+@media (pointer: coarse) {
+  .carouselWrapper {
+    .arrow {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .dot {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+
+  .websiteBtn {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+// 暗色主题适配
+@media (prefers-color-scheme: dark) {
+  .statsBanner::before {
+    opacity: 0.3;
+  }
+
+  .carouselSlide .slideContent {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+  }
+}
+
+// 减少动画偏好
+@media (prefers-reduced-motion: reduce) {
+  .statsBanner::before,
+  .statCard,
+  .websiteBtn,
+  .carouselTrack,
+  .arrow,
+  .dot {
+    transition: none;
+    animation: none;
+  }
+
+  .statNumber .number {
+    animation: none;
+  }
+
+  .todayVisit .todayNumber {
+    animation: none;
+  }
+
+  .carouselSlide .slideContent {
+    animation: none;
+  }
+}
+
+// 高对比度模式
+@media (prefers-contrast: high) {
+  .statCard {
+    border-width: 2px;
+  }
+
+  .websiteBtn {
+    border-width: 2px;
+  }
+
+  .carouselSlide .slideContent {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+// 打印样式
+@media print {
+  .statsBanner {
+    padding: 1rem 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .carouselWrapper {
+    display: none;
+  }
+
+  .wrapper {
+    grid-template-columns: 1fr !important;
+  }
+
+  .websiteBtn {
+    display: none;
+  }
+}

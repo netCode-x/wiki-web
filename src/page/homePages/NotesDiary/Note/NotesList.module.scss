@@ -1,0 +1,474 @@
+// NotesList.module.scss
+
+// CSS 变量定义
+:root {
+  --sidebar-width: 380px;
+  --note-padding: 1rem 1.2rem;
+  --detail-padding: 2rem;
+  --container-padding: 30px;
+}
+
+// 大屏幕优化
+@media (min-width: 1920px) {
+  :root {
+    --sidebar-width: 420px;
+    --note-padding: 1.25rem 1.5rem;
+    --detail-padding: 2.5rem;
+    --container-padding: 40px;
+  }
+}
+
+// 平板优化
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 340px;
+    --note-padding: 0.875rem 1rem;
+    --detail-padding: 1.5rem;
+    --container-padding: 20px;
+  }
+}
+
+// 手机优化
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 100%;
+    --note-padding: 0.875rem 1rem;
+    --detail-padding: 1.25rem;
+    --container-padding: 16px;
+  }
+}
+
+.notesSection {
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  background: var(--body-bg);
+  transition: background 0.3s ease;
+  position: relative;
+}
+
+.notesContainer {
+  padding: clamp(1rem, 4vw, var(--container-padding));
+  display: grid;
+  grid-template-columns: minmax(auto, var(--sidebar-width)) 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  min-height: 600px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+// 左侧边栏
+.notesSidebar {
+  background: var(--card-bg);
+  border-radius: clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  max-height: 70vh;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebarTitle {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    padding: clamp(0.875rem, 3vw, 1rem) clamp(1rem, 4vw, 1.2rem);
+    margin: 0;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--card-bg), rgba(59, 130, 246, 0.05));
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}
+
+.notesList {
+  overflow-y: auto;
+  padding: 0.5rem 0;
+  overscroll-behavior: contain;
+  will-change: scroll-position;
+  flex: 1;
+
+  // 滚动条样式
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--logo-gradient-start);
+    border-radius: 2px;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.noteCard {
+  padding: var(--note-padding);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  // 分隔线
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: clamp(1rem, 4vw, 1.2rem);
+    right: clamp(1rem, 4vw, 1.2rem);
+    height: 1px;
+    background: var(--border-color);
+    opacity: 0.3;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+
+  &:hover {
+    background: var(--nav-hover-bg);
+    padding-left: calc(clamp(1rem, 4vw, 1.2rem) + 0.2rem);
+    border-left-color: var(--logo-gradient-start);
+
+    .cardTitle {
+      color: var(--logo-gradient-start);
+    }
+  }
+
+  &.active {
+    background: linear-gradient(90deg,
+            rgba(59, 130, 246, 0.08),
+            transparent
+    );
+    border-left-color: var(--logo-gradient-start);
+    padding-left: calc(clamp(1rem, 4vw, 1.2rem) + 0.2rem);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg,
+              var(--logo-gradient-start),
+              var(--logo-gradient-mid)
+      );
+    }
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.7rem, 2.5vw, 0.75rem);
+    color: var(--text-secondary);
+
+    .cardDate {
+      font-weight: 500;
+    }
+
+    .cardTime {
+      font-family: monospace;
+    }
+  }
+
+  .cardTitle {
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+    line-height: 1.4;
+
+    // 多行省略
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cardSummary {
+    font-size: clamp(0.8rem, 3vw, 0.85rem);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// 右侧详情区域
+.notesDetail {
+  background: var(--paper-bg);
+  border-radius: clamp(1rem, 4vw, 1.5rem);
+  padding: var(--detail-padding);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  // 装饰性内边线
+  &::before {
+    content: '';
+    position: absolute;
+    top: clamp(1rem, 4vw, 1.5rem);
+    left: clamp(1rem, 4vw, 1.5rem);
+    right: clamp(1rem, 4vw, 1.5rem);
+    bottom: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .detailHeader {
+    margin-bottom: clamp(1.5rem, 5vw, 2rem);
+    padding-bottom: clamp(0.75rem, 3vw, 1rem);
+    border-bottom: 2px solid var(--border-color);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--logo-gradient-start), var(--logo-gradient-mid));
+    }
+
+    .detailDateTime {
+      font-size: clamp(0.8rem, 3vw, 0.85rem);
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-family: monospace;
+    }
+
+    .detailTitle {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-primary);
+      line-height: 1.3;
+      background: linear-gradient(135deg, var(--text-primary), var(--logo-gradient-start));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .detailContent {
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    line-height: 1.8;
+    color: var(--text-primary);
+    text-align: justify;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    // 自定义滚动条
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--logo-gradient-start);
+      border-radius: 2px;
+    }
+
+    p {
+      margin: 0 0 1rem 0;
+      text-indent: 2em;
+
+      &:first-child {
+        text-indent: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// 加载和错误状态样式
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: clamp(2rem, 10vw, 4rem) 0;
+  color: var(--text-secondary);
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+}
+
+.loading {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--logo-gradient-start);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+  }
+}
+
+.error {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.05);
+  border-radius: 0.75rem;
+}
+
+// 动画
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 响应式调整 - 平板横屏
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .notesDetail .detailContent {
+    max-height: 50vh;
+  }
+}
+
+// 响应式调整 - 手机
+@media (max-width: 768px) {
+  .notesSidebar {
+    max-height: 50vh;
+  }
+
+  .noteCard {
+    .cardSummary {
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  .notesDetail {
+    .detailContent {
+      max-height: 50vh;
+
+      p {
+        text-indent: 1.5em;
+      }
+    }
+
+    &::before {
+      display: none; // 移动端移除装饰性边框
+    }
+  }
+}
+
+// 触摸设备优化
+@media (pointer: coarse) {
+  .noteCard {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+      background: var(--nav-hover-bg);
+      transform: scale(0.99);
+    }
+  }
+
+  .notesDetail .detailContent {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// 暗色主题适配
+@media (prefers-color-scheme: dark) {
+  .notesSidebar,
+  .notesDetail {
+    backdrop-filter: blur(12px);
+  }
+
+  .noteCard.active {
+    background: linear-gradient(90deg,
+            rgba(59, 130, 246, 0.15),
+            transparent
+    );
+  }
+
+  .notesDetail .detailContent::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// 减少动画偏好
+@media (prefers-reduced-motion: reduce) {
+  .noteCard,
+  .notesDetail,
+  .loading::after {
+    transition: none;
+    animation: none;
+  }
+
+  .noteCard:hover,
+  .notesDetail:hover {
+    transform: none;
+  }
+
+  .noteCard:active {
+    transform: none;
+  }
+}
+
+// 打印样式
+@media print {
+  .notesSection {
+    padding: 0;
+  }
+
+  .notesContainer {
+    display: block;
+  }
+
+  .notesSidebar {
+    display: none;
+  }
+
+  .notesDetail {
+    box-shadow: none;
+    padding: 0;
+
+    &::before {
+      display: none;
+    }
+  }
+}

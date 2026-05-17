@@ -1,0 +1,524 @@
+// Footer.module.scss
+
+// CSS 变量定义
+:root {
+  --footer-margin-top: 4rem;
+  --footer-padding: 3rem 0 2rem;
+  --footer-gap: 3rem;
+  --section-title-size: 1.2rem;
+  --friend-card-padding: 1rem 1.2rem;
+  --icon-size: 40px;
+  --qr-size: 100px;
+}
+
+// 大屏幕优化
+@media (min-width: 1920px) {
+  :root {
+    --footer-margin-top: 5rem;
+    --footer-padding: 4rem 0 2.5rem;
+    --footer-gap: 4rem;
+    --section-title-size: 1.4rem;
+    --friend-card-padding: 1.2rem 1.5rem;
+    --icon-size: 48px;
+    --qr-size: 120px;
+  }
+}
+
+// 桌面优化
+@media (min-width: 1440px) and (max-width: 1919px) {
+  :root {
+    --footer-gap: 3.5rem;
+    --section-title-size: 1.3rem;
+  }
+}
+
+// 平板优化
+@media (max-width: 1024px) {
+  :root {
+    --footer-margin-top: 3rem;
+    --footer-padding: 2.5rem 0 1.5rem;
+    --footer-gap: 2.5rem;
+    --section-title-size: 1.1rem;
+  }
+}
+
+// 手机优化
+@media (max-width: 768px) {
+  :root {
+    --footer-margin-top: 2rem;
+    --footer-padding: 2rem 0 1.5rem;
+    --footer-gap: 2rem;
+    --section-title-size: 1rem;
+    --friend-card-padding: 0.875rem 1rem;
+    --icon-size: 36px;
+    --qr-size: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --footer-padding: 1.5rem 0 1rem;
+    --footer-gap: 1.5rem;
+    --icon-size: 32px;
+    --qr-size: 70px;
+  }
+}
+
+.footer {
+  margin-top: var(--footer-margin-top);
+  padding: var(--footer-padding);
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  // 装饰性元素
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--logo-gradient-start),
+            var(--logo-gradient-mid),
+            transparent
+    );
+    opacity: 0.3;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    gap: var(--footer-gap);
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .section {
+    .sectionTitle {
+      font-size: var(--section-title-size);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: clamp(1rem, 4vw, 1.5rem);
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg,
+                var(--logo-gradient-start),
+                var(--logo-gradient-mid)
+        );
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::after {
+        width: 60px;
+      }
+    }
+  }
+
+  // 左侧友情链接卡片
+  .friendLinks {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 3vw, 1rem);
+
+    .friendCard {
+      display: block;
+      padding: var(--friend-card-padding);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: clamp(0.75rem, 3vw, 1rem);
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+
+      // 悬停光效
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      &:hover {
+        transform: translateX(4px) translateY(-2px);
+        border-color: var(--logo-gradient-start);
+        box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.15);
+        background: var(--card-hover-bg);
+
+        &::before {
+          left: 100%;
+        }
+
+        .linkName {
+          color: var(--logo-gradient-start);
+        }
+      }
+
+      &:active {
+        transform: translateX(2px) translateY(0);
+      }
+
+      .linkName {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: clamp(0.25rem, 2vw, 0.5rem);
+        transition: color 0.2s ease;
+      }
+
+      .linkDesc {
+        font-size: clamp(0.75rem, 3vw, 0.85rem);
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+
+  // 右侧新布局
+  .rightContent {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 4vw, 1.5rem);
+
+    // 社交媒体图标
+    .socialIcons {
+      display: flex;
+      gap: clamp(1rem, 3vw, 1.5rem);
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .iconLink {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        border-radius: 50%;
+        background: var(--btn-bg);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: var(--text-secondary);
+
+        // 触摸优化
+        @media (pointer: coarse) {
+          min-width: 44px;
+          min-height: 44px;
+        }
+
+        &:hover {
+          transform: translateY(-3px);
+          background: var(--btn-hover-bg);
+          border-color: var(--logo-gradient-start);
+          color: var(--logo-gradient-start);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+          transform: translateY(-1px) scale(0.95);
+        }
+
+        .icon {
+          width: clamp(16px, 4vw, 20px);
+          height: clamp(16px, 4vw, 20px);
+          fill: currentColor;
+          transition: transform 0.2s ease;
+        }
+
+        &:hover .icon {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    // 个人信息 + 二维码区域
+    .infoQr {
+      display: flex;
+      gap: clamp(1rem, 4vw, 1.5rem);
+      flex-wrap: wrap;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contactInfo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.5rem, 2vw, 0.75rem);
+
+        @media (max-width: 480px) {
+          width: 100%;
+        }
+
+        .contactItem {
+          display: flex;
+          align-items: baseline;
+          flex-wrap: wrap;
+          font-size: clamp(0.85rem, 3vw, 0.9rem);
+          line-height: 1.6;
+          padding: clamp(0.25rem, 1vw, 0.5rem);
+          transition: all 0.2s ease;
+          border-radius: 0.5rem;
+
+          &:hover {
+            background: var(--nav-hover-bg);
+            transform: translateX(4px);
+          }
+
+          .contactLabel {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 48px;
+            flex-shrink: 0;
+          }
+
+          .contactValue {
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+            word-break: break-all;
+            cursor: pointer;
+
+            &:hover {
+              color: var(--logo-gradient-start);
+            }
+          }
+        }
+      }
+
+      .qrCode {
+        flex-shrink: 0;
+        width: var(--qr-size);
+        height: var(--qr-size);
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: clamp(0.75rem, 3vw, 1rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+
+        // 触摸优化
+        @media (pointer: coarse) {
+          min-width: 80px;
+          min-height: 80px;
+        }
+
+        &:hover {
+          transform: scale(1.02) translateY(-2px);
+          border-color: var(--logo-gradient-start);
+          box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+
+        .qrPlaceholder {
+          width: calc(100% - 12px);
+          height: calc(100% - 12px);
+          background: linear-gradient(135deg,
+                  var(--logo-gradient-start),
+                  var(--logo-gradient-mid)
+          );
+          border-radius: clamp(0.5rem, 2vw, 0.75rem);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: clamp(0.65rem, 2.5vw, 0.7rem);
+          text-align: center;
+          line-height: 1.3;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover .qrPlaceholder {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  // 备案信息
+  .copyright {
+    text-align: center;
+    padding-top: clamp(1rem, 4vw, 2rem);
+    border-top: 1px solid var(--border-color);
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+
+    p {
+      margin: 0;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+// 响应式调整 - 平板横屏
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .footer .content {
+    gap: 1.5rem;
+  }
+}
+
+// 响应式调整 - 手机横屏
+@media (max-width: 768px) and (orientation: landscape) {
+  .footer {
+    margin-top: 1rem;
+    padding: 1rem 0;
+  }
+
+  .friendLinks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+// 触摸设备优化
+@media (pointer: coarse) {
+  .friendCard,
+  .iconLink,
+  .qrCode,
+  .contactItem {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+// 暗色主题适配
+@media (prefers-color-scheme: dark) {
+  .footer {
+    backdrop-filter: blur(12px);
+
+    &::before {
+      opacity: 0.5;
+    }
+  }
+
+  .friendCard::before {
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent
+    );
+  }
+}
+
+// 减少动画偏好
+@media (prefers-reduced-motion: reduce) {
+  .footer,
+  .friendCard,
+  .iconLink,
+  .qrCode,
+  .qrPlaceholder,
+  .contactItem {
+    transition: none;
+    animation: none;
+  }
+
+  .friendCard::before {
+    display: none;
+  }
+
+  .sectionTitle::after {
+    transition: none;
+  }
+
+  .icon:hover .icon {
+    transform: none;
+  }
+}
+
+// 高对比度模式
+@media (prefers-contrast: high) {
+  .footer {
+    border-top-width: 2px;
+  }
+
+  .friendCard {
+    border-width: 2px;
+  }
+
+  .iconLink {
+    border-width: 2px;
+  }
+
+  .qrCode {
+    border-width: 2px;
+  }
+
+  .copyright {
+    border-top-width: 2px;
+  }
+}
+
+// 打印样式
+@media print {
+  .footer {
+    margin-top: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid #000;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .friendCard,
+  .iconLink,
+  .qrCode {
+    text-decoration: none;
+    border: 1px solid #ccc;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .qrPlaceholder {
+    background: #f0f0f0;
+    color: #000;
+  }
+}

@@ -1,0 +1,530 @@
+// Home.module.scss
+
+// CSS 变量定义
+:root {
+  --hero-padding-top: 2rem;
+  --hero-padding-bottom: 2rem;
+  --btn-padding: 0.8rem 2rem;
+  --btn-font-size: 1rem;
+  --container-max-width: 1200px;
+}
+
+// 响应式变量
+@media (min-width: 1920px) {
+  :root {
+    --hero-padding-top: 3rem;
+    --hero-padding-bottom: 3rem;
+    --container-max-width: 1400px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --hero-padding-top: 1.5rem;
+    --hero-padding-bottom: 1.5rem;
+    --btn-padding: 0.7rem 1.5rem;
+    --btn-font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --hero-padding-top: 1rem;
+    --hero-padding-bottom: 1rem;
+    --btn-padding: 0.6rem 1.2rem;
+    --btn-font-size: 0.85rem;
+  }
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--hero-padding-top) 1rem var(--hero-padding-bottom);
+  background: var(--hero-bg);
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  // 装饰性背景元素
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,
+            rgba(59, 130, 246, 0.05) 0%,
+            transparent 70%
+    );
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(59, 130, 246, 0.2),
+            transparent
+    );
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+}
+
+.mainTitle {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
+  position: relative;
+  display: inline-block;
+
+  .gradientText {
+    background: linear-gradient(135deg,
+            var(--logo-gradient-start) 0%,
+            var(--logo-gradient-mid) 50%,
+            var(--logo-gradient-end) 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: flowGradient 6s linear infinite;
+    display: inline-block;
+    position: relative;
+
+    // 添加微光效果
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg,
+              transparent,
+              rgba(255, 255, 255, 0.3),
+              transparent
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      opacity: 0;
+      animation: shimmer 3s infinite;
+      pointer-events: none;
+    }
+  }
+}
+
+.conjunction {
+  font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+  font-weight: 300;
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+  letter-spacing: 0.2em;
+  opacity: 0.8;
+  position: relative;
+  display: inline-block;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-secondary));
+    opacity: 0.3;
+  }
+
+  &::before {
+    right: 100%;
+    margin-right: 10px;
+  }
+
+  &::after {
+    left: 100%;
+    margin-left: 10px;
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 480px) {
+    &::before,
+    &::after {
+      width: 20px;
+    }
+  }
+}
+
+.subTitle {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  position: relative;
+  display: inline-block;
+
+  // 添加下划线装饰
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg,
+            var(--logo-gradient-start),
+            var(--logo-gradient-end)
+    );
+    border-radius: 2px;
+    animation: widthGrow 0.6s ease-out;
+  }
+
+  @media (max-width: 768px) {
+    &::after {
+      width: 40px;
+      height: 2px;
+      bottom: -8px;
+    }
+  }
+}
+
+.description {
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  color: var(--text-secondary);
+  margin: 1.5rem auto 2rem;
+  max-width: 600px;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+
+  @media (max-width: 768px) {
+    margin: 1.2rem auto 1.5rem;
+    line-height: 1.5;
+  }
+}
+
+.messageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: var(--btn-padding);
+  font-size: var(--btn-font-size);
+  font-weight: 500;
+  color: var(--btn-text);
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+
+  // 按钮波纹效果
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btnIcon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &:hover {
+    background: var(--btn-hover-bg);
+    border-color: var(--btn-hover-border);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    .btnIcon {
+      transform: translateX(4px);
+    }
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // 触摸设备优化
+  @media (pointer: coarse) {
+    min-height: 44px;
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+}
+
+// 动画效果
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes widthGrow {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    opacity: 1;
+  }
+}
+
+// 响应式调整 - 平板
+@media (min-width: 769px) and (max-width: 1024px) {
+  .content {
+    max-width: 85%;
+  }
+
+  .description {
+    max-width: 500px;
+  }
+}
+
+// 响应式调整 - 手机横屏
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .mainTitle {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  .subTitle {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    margin: 0.5rem 0;
+
+    &::after {
+      bottom: -6px;
+    }
+  }
+
+  .description {
+    margin: 1rem auto;
+  }
+}
+
+// 响应式调整 - 手机竖屏
+@media (max-width: 480px) {
+  .conjunction {
+    letter-spacing: 0.1em;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .subTitle::after {
+    width: 30px;
+  }
+
+  .description {
+    padding: 0 0.5rem;
+  }
+}
+
+// 大屏幕优化
+@media (min-width: 1920px) {
+  .content {
+    max-width: 1000px;
+  }
+
+  .description {
+    max-width: 700px;
+    font-size: 1.2rem;
+  }
+
+  .messageBtn {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+
+    .btnIcon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// 暗色主题适配
+@media (prefers-color-scheme: dark) {
+  .hero::before {
+    background: radial-gradient(circle,
+            rgba(59, 130, 246, 0.08) 0%,
+            transparent 70%
+    );
+  }
+
+  .messageBtn {
+    backdrop-filter: blur(8px);
+
+    &::before {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// 高对比度模式
+@media (prefers-contrast: high) {
+  .mainTitle .gradientText {
+    background: none;
+    color: var(--text-primary);
+  }
+
+  .subTitle::after {
+    background: var(--text-primary);
+  }
+
+  .messageBtn {
+    border-width: 2px;
+  }
+}
+
+// 减少动画偏好
+@media (prefers-reduced-motion: reduce) {
+  .hero::before {
+    animation: none;
+  }
+
+  .mainTitle .gradientText {
+    animation: none;
+  }
+
+  .content {
+    animation: none;
+  }
+
+  .messageBtn .btnIcon {
+    transition: none;
+  }
+
+  .subTitle::after {
+    animation: none;
+  }
+}
+
+// Windows 触摸屏优化
+@media (pointer: coarse) {
+  .messageBtn {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+// 打印样式
+@media print {
+  .hero {
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  .messageBtn {
+    display: none;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+}
